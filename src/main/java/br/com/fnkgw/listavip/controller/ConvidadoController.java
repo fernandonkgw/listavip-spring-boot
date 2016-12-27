@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import br.com.fnkgw.enviadorEmail.EmailService;
 import br.com.fnkgw.listavip.model.Convidado;
-import br.com.fnkgw.listavip.repository.ConvidadoRepository;
 import br.com.fnkgw.listavip.service.ConvidadoService;
 
 @Controller
