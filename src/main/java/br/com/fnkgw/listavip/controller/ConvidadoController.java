@@ -7,14 +7,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.fnkgw.enviadorEmail.EmailService;
 import br.com.fnkgw.listavip.model.Convidado;
 import br.com.fnkgw.listavip.repository.ConvidadoRepository;
+import br.com.fnkgw.listavip.service.ConvidadoService;
 
 @Controller
 public class ConvidadoController {
 
 	@Autowired
-	private ConvidadoRepository repository;
+	private ConvidadoService service;
 	
 	@RequestMapping("/")
 	public String home() {
@@ -24,7 +26,7 @@ public class ConvidadoController {
 	@RequestMapping("listaconvidados")
 	public String listaconvidados(Model model) {
 		
-		Iterable<Convidado> convidados = repository.findAll();
+		Iterable<Convidado> convidados = service.obterTodos();
 		model.addAttribute("convidados", convidados);
 		
 		return "listaconvidados";
@@ -34,9 +36,11 @@ public class ConvidadoController {
 	public String salvar(@RequestParam("nome") String nome, @RequestParam("email") String email, 
 			@RequestParam("telefone") String telefone, Model model) {
 		Convidado novoConvidado = new Convidado(nome, email, telefone);
-		repository.save(novoConvidado);
+		service.salvar(novoConvidado);
 		
-		Iterable<Convidado> convidados = repository.findAll();
+		//new EmailService().enviar(nome, email);
+		
+		Iterable<Convidado> convidados = service.obterTodos();
 		model.addAttribute("convidados", convidados);
 		
 		return "listaconvidados";
